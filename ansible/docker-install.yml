@@ -1,0 +1,29 @@
+---
+- name: Installer Docker
+  hosts: local
+  become: true
+
+  tasks:
+    - name: Installer les paquets nécessaires
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+        state: present
+
+    - name: Ajouter le dépôt Docker
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Installer Docker
+      yum:
+        name: docker-ce
+        state: present
+
+    - name: Démarrer et activer Docker
+      service:
+        name: docker
+        state: started
+        enabled: true
