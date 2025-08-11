@@ -1,6 +1,6 @@
 ---
 - name: Installer Docker
-  hosts: local
+  hosts: lab.salma.habli
   become: true
 
   tasks:
