@@ -1,41 +1,25 @@
 ---
 - name: Déployer les conteneurs Docker
-  hosts: localhost
+  hosts: local
   become: true
 
   tasks:
-    - name: Créer dossier /home/salma/mon-site-web si absent
-      file:
-        path: /home/salma/mon-site-web
-        state: directory
-        mode: '0755'
-        owner: root
-        group: root
-
-    - name: Créer dossier /home/salma/cert si absent
-      file:
-        path: /home/salma/cert
-        state: directory
-        mode: '0755'
-        owner: root
-        group: root
-
     - name: Copier fichiers du site web
       ansible.builtin.synchronize:
-        src: "{{ playbook_dir }}/../mon-site-web/"
-        dest: "/home/salma/mon-site-web/"
+        src: /home/salma/projet-devops/mon-site-web/
+        dest: /home/salma/mon-site-web/
         recursive: yes
 
     - name: Copier certificats SSL
       ansible.builtin.synchronize:
-        src: "{{ playbook_dir }}/../nginx/ssl/"
-        dest: "/home/salma/cert/"
+        src: /home/salma/projet-devops/nginx/ssl/
+        dest: /home/salma/cert/
         recursive: yes
 
     - name: Copier fichier de configuration nginx
       copy:
-        src: "{{ playbook_dir }}/../nginx/default.conf"
-        dest: "/home/salma/nginx.conf"
+        src: /home/salma/projet-devops/nginx/default.conf
+        dest: /home/salma/nginx.conf
         owner: root
         group: root
         mode: '0644'
