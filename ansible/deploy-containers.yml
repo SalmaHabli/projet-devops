@@ -9,16 +9,16 @@
         path: /home/salma/mon-site-web
         state: directory
         mode: '0755'
-        owner: salma
-        group: salma
+        owner: root
+        group: root
 
     - name: Créer dossier /home/salma/cert si absent
       file:
         path: /home/salma/cert
         state: directory
         mode: '0755'
-        owner: salma
-        group: salma
+        owner: root
+        group: root
 
     - name: Copier fichiers du site web
       ansible.builtin.synchronize:
