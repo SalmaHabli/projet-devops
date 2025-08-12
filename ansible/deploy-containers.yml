@@ -1,9 +1,9 @@
 ---
 - name: Déployer les conteneurs Docker
-  hosts: lab.salma.habli
+  hosts: lab_salma_habli
   become: true
   vars:
-    ansible_docker_host: unix://var/run/docker.sock
+    ansible_docker_host: unix:///var/run/docker.sock
   tasks:
     - name: Créer dossier /home/salma/mon-site-web si absent
       file:
