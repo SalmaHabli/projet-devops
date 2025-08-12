@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_HOST = "unix:///var/run/docker.sock"
+        ANSIBLE_CONFIG = "${WORKSPACE}/ansible/ansible.cfg"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -17,7 +22,10 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
-                sh '/bin/ansible-playbook ansible/deploy-containers.yml -i ansible/hosts'
+                sh '''
+                    echo "🔹 Lancement du playbook..."
+                    /bin/ansible-playbook ansible/deploy-containers.yml -i ansible/hosts
+                '''
             }
         }
     }

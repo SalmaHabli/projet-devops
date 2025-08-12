@@ -3,7 +3,7 @@
   become: true
   vars:
     ansible_docker_host: unix:///var/run/docker.sock
-
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Créer dossier /home/salma/mon-site-web si absent
       file:
