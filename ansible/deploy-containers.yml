@@ -2,8 +2,8 @@
   hosts: lab_salma_habli
   become: true
   vars:
-    ansible_docker_host: unix:///var/run/docker.sock
     ansible_python_interpreter: /usr/bin/python3
+
   tasks:
     - name: Créer dossier /home/salma/mon-site-web si absent
       file:
@@ -45,6 +45,7 @@
       community.docker.docker_network:
         name: app-network
         state: present
+        docker_host: unix:///var/run/docker.sock
 
     - name: Déployer conteneur MySQL
       community.docker.docker_container:
@@ -60,6 +61,7 @@
           - name: app-network
         volumes:
           - "projet-devops_mysql-data:/var/lib/mysql"
+        docker_host: unix:///var/run/docker.sock
 
     - name: Déployer conteneur phpMyAdmin
       community.docker.docker_container:
@@ -73,6 +75,7 @@
           PMA_HOST: mysql-server
         networks:
           - name: app-network
+        docker_host: unix:///var/run/docker.sock
 
     - name: Déployer conteneur Nginx
       community.docker.docker_container:
@@ -90,4 +93,5 @@
           - "/home/salma/nginx.conf:/etc/nginx/conf.d/default.conf"
         networks:
           - name: app-network
+        docker_host: unix:///var/run/docker.sock
 
